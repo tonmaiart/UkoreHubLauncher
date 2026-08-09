@@ -1,0 +1,28 @@
+.venv/
+__pycache__/
+*.pyc
+# Nested clone of the app repo (UkoreHub, a.k.a. "UkoreHubRelease") that
+# updater.py bootstraps/updates on its own — an independent git working
+# tree, not part of this repo's own tracked files. See README.md.
+/app/
+# Per-machine workspace choice (see updater.py's ensure_workspace_dir) —
+# the folder itself usually lives on another drive entirely, but this
+# covers the case where the picker was cancelled and it fell back to
+# right here. Holds cache/ (login tokens) and storage/ (cloned repos),
+# passed to launcher.py via UKOREHUB_CACHE_DIR/UKOREHUB_STORAGE_DIR so
+# both live outside /app/ and survive its every force-reset update.
+/workspace/
+# Remembers the workspace_root chosen above — per-machine, a local
+# filesystem path, never shared.
+/launcher_config.json
+# PyInstaller intermediates from build_exe.py — regenerate every build,
+# never committed. The resulting UkoreHubLauncher.exe at the repo root IS
+# committed — a shared studio-wide binary artists' installs self-update
+# from.
+/build/
+*.spec
+# Old UkoreHubLauncher.exe renamed aside by updater.py's _relocate_self_exe
+# during a self-update (Windows won't let git overwrite the exe while it's
+# running, but it will let it be renamed) — cleaned up automatically on
+# the next launch, never committed.
+/UkoreHubLauncher.exe.old-*
